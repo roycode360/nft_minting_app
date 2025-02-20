@@ -3,7 +3,7 @@ name: Deploy to AWS EC2
 on:
   push:
     branches:
-      - production
+      - main
 
 jobs:
   deploy:
@@ -30,12 +30,7 @@ jobs:
         env:
           CI: false
         run: |
-          REACT_APP_BACKEND_API=${{ secrets.REACT_APP_BACKEND_API }} \
-          REACT_APP_CLOUDINARY_CLOUDINARY_UPLOAD_URL=${{ secrets.REACT_APP_CLOUDINARY_CLOUDINARY_UPLOAD_URL }} \
-          REACT_APP_CLOUDINARY_UNSIGNED_UPLOAD_PRESET=${{ secrets.REACT_APP_CLOUDINARY_UNSIGNED_UPLOAD_PRESET }} \
-          REACT_APP_EAZIPOWER_APP_URL=${{ secrets.REACT_APP_EAZIPOWER_APP_URL }} \
-          REACT_APP_SANITY_PROJECTID=${{ secrets.REACT_APP_SANITY_PROJECTID }} \
-          REACT_APP_SANITY_DATASET=${{ secrets.REACT_APP_SANITY_DATASET }} \
+          REACT_APP_BACKEND_API=${{ secrets.NEXT_PUBLIC_API_URL }} \
           NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
       # Set up SSH for EC2 connection
