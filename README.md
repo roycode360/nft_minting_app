@@ -102,9 +102,9 @@ From the root of your project, run:
 
 ## Submission
 
-Deployed API link (Render): ""
+Deployed API link (Render): https://nft-minting-app-kappa.vercel.app/
 
-Deployed frontend link (Vercel): ""
+Deployed frontend link (Vercel): https://nft-minting-backend-u7as.onrender.com/
 
 Walthrough Video: https://www.loom.com/share/fd44d84e68644047bd05aa7d71b0905b
 
