@@ -106,6 +106,6 @@ Deployed API link (Render): ""
 
 Deployed frontend link (Vercel): ""
 
-Walthrough Video: ""
+Walthrough Video: https://www.loom.com/share/fd44d84e68644047bd05aa7d71b0905b
 
-Project GitHub Repository: ""
+Project GitHub Repository: https://github.com/roycode360/nft_minting_app.git

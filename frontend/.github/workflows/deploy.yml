@@ -42,12 +42,12 @@ jobs:
       # Create target directory on EC2
       - name: Create target directory on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no admin@ec2-51-20-7-6.eu-north-1.compute.amazonaws.com 'mkdir -p /home/admin/eazipower_web/build'
+          ssh -o StrictHostKeyChecking=no admin@ec2-51-20-7-6.eu-north-1.compute.amazonaws.com 'mkdir -p /home/admin/nft_minting_ui/build'
 
       # Copy the build directory to the EC2 server
       - name: Copy build files to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -r build/. admin@ec2-51-20-7-6.eu-north-1.compute.amazonaws.com:/home/admin/eazipower_web/build
+          scp -o StrictHostKeyChecking=no -r build/. admin@ec2-51-20-7-6.eu-north-1.compute.amazonaws.com:/home/admin/nft_minting_ui/build
 
       # Restart Nginx
       - name: Restart Nginx
