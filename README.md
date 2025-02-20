@@ -99,3 +99,13 @@ From the root of your project, run:
 > **Note:**  
 > This command uses concurrently to start both the Next.js frontend and the NestJS backend.
 > The frontend is available at http://localhost:3000 & backend at http://localhost:8000
+
+## Submission
+
+Deployed API link (Render): ""
+
+Deployed frontend link (Vercel): ""
+
+Walthrough Video: ""
+
+Project GitHub Repository: ""

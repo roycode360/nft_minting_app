@@ -1,13 +1,9 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-    ],
+module.exports = {
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /node_modules\/(debug|supports-color)/,
+      type: "javascript/auto", // Treats CommonJS modules as ESM
+    });
+    return config;
   },
 };
-
-module.exports = nextConfig;
