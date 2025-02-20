@@ -1,0 +1,60 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+        # Set up Node.js environment
+      - name: Set up nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.17.1"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # Set envs & Build the React app
+      - name: Build React app
+        env:
+          CI: false
+        run: |
+          REACT_APP_BACKEND_API=${{ secrets.REACT_APP_BACKEND_API }} \
+          REACT_APP_CLOUDINARY_CLOUDINARY_UPLOAD_URL=${{ secrets.REACT_APP_CLOUDINARY_CLOUDINARY_UPLOAD_URL }} \
+          REACT_APP_CLOUDINARY_UNSIGNED_UPLOAD_PRESET=${{ secrets.REACT_APP_CLOUDINARY_UNSIGNED_UPLOAD_PRESET }} \
+          REACT_APP_EAZIPOWER_APP_URL=${{ secrets.REACT_APP_EAZIPOWER_APP_URL }} \
+          REACT_APP_SANITY_PROJECTID=${{ secrets.REACT_APP_SANITY_PROJECTID }} \
+          REACT_APP_SANITY_DATASET=${{ secrets.REACT_APP_SANITY_DATASET }} \
+          NODE_OPTIONS="--max-old-space-size=4096" npm run build
+
+      # Set up SSH for EC2 connection
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Create target directory on EC2
+      - name: Create target directory on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no admin@ec2-51-20-7-6.eu-north-1.compute.amazonaws.com 'mkdir -p /home/admin/eazipower_web/build'
+
+      # Copy the build directory to the EC2 server
+      - name: Copy build files to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -r build/. admin@ec2-51-20-7-6.eu-north-1.compute.amazonaws.com:/home/admin/eazipower_web/build
+
+      # Restart Nginx
+      - name: Restart Nginx
+        run: |
+          ssh -o StrictHostKeyChecking=no admin@ec2-51-20-7-6.eu-north-1.compute.amazonaws.com 'sudo systemctl restart nginx'
